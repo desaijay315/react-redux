@@ -41,8 +41,28 @@ const setTextFilter = (text = '') => ({
 	text
 });
 
-//default expenses
-const expensesReducerDefaultState = [];
+//sort by amount
+const sortByAmount = () => ({
+  type : 'SORT_BY_AMOUNT'
+
+});
+
+
+//sort by date
+const sortByDate = () => ({
+  type : 'SORT_BY_DATE'
+});
+
+const setStartDate = (date = '') => ({
+  type: 'SET_START_DATE',
+  date
+});
+
+const setEndDate = (date = '') => ({
+  type: 'SET_END_DATE',
+  date
+});
+
 
 //default filter state
 
@@ -53,6 +73,8 @@ const filterReducerDefaultState  = {
 	endDate   : undefined
 }
 
+//default expenses
+const expensesReducerDefaultState = [];
 //expenses reducers
 const expensesReducers = (state = expensesReducerDefaultState  , action) => {
    switch(action.type){
@@ -92,10 +114,50 @@ const filterReducer = (state = filterReducerDefaultState, action ) => {
 		  	 ...state,
 		  	 text : action.text
 		  };
+	    case 'SORT_BY_DATE':
+	     return {
+	  	     ...state,
+	  	     date : 'date'
+	     };
+	      case 'SORT_BY_AMOUNT':
+	     return {
+	  	     ...state,
+	  	     sortBy : 'amount'
+	     };
+	     case 'SET_START_DATE':
+	     return {
+	  	     ...state,
+	  	     startDate : action.date
+	     };
+	     case 'SET_END_DATE':
+	     return {
+	  	     ...state,
+	  	     endDate : action.date
+	     };
 		default:
 			return state;
 	}
 }
+
+
+//get visible exepndsa 
+
+const getVisibleExpenses = (expenses , { text , sortBy, startDate, endDate }) => {
+  return expenses.filter((expense) => {
+    const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate ;
+    const endDateMatch   = typeof startDate !== 'number' || expense.createdAt <= endDate ;
+    const textMatch      = expense.description.toLowerCase().includes(text.toLowerCase());
+
+    return startDateMatch && endDateMatch && textMatch;
+  }).sort((a, b) => {
+  	  if(sortBy === 'date'){
+       return a.createdAt < b.createdAt ? 1 : -1;  	  	
+  	  }else if(sortBy === 'amount'){
+        return a.amount < b.amount ? 1 : -1;
+  	  }
+  });
+}
+
 
 //creation store
 const store  = createStore(combineReducers({
@@ -104,17 +166,27 @@ const store  = createStore(combineReducers({
 }));
 
 store.subscribe(() => {
-console.log(store.getState());	
+	const state = store.getState();
+	const visibleExpenses = getVisibleExpenses(state.expenses, state.filter);
+	// console.log(store.getState());	
+	console.log(visibleExpenses);	
 })
 
-const expenseOne = store.dispatch(addExpense({description : 'Rent', amount : 100}));
-const expenseTwo = store.dispatch(addExpense({description : 'Coddfee', amount : 600}));
+const expenseOne = store.dispatch(addExpense({description : 'Rent', amount : 100, createdAt : -21000}));
+const expenseTwo = store.dispatch(addExpense({description : 'Coddfee', amount : 10, createdAt  : -1000}));
 
 
-store.dispatch(removeExpense({id: expenseOne.expense.id}));
-store.dispatch(editExpense(expenseTwo.expense.id, { amount : 1000}));
+// store.dispatch(removeExpense({id: expenseOne.expense.id}));
+// store.dispatch(editExpense(expenseTwo.expense.id, { amount : 1000}));
 
-store.dispatch(setTextFilter('rent'));
+// store.dispatch(setTextFilter('e'));
+store.dispatch(sortByAmount()); //amount
+// store.dispatch(sortByDate()); //date
+
+
+// store.dispatch(setStartDate(0)); //date
+// // store.dispatch(setStartDate()); //date
+// store.dispatch(setEndDate(1260)); //date
 
 const demoState = {
 	expenses :[{

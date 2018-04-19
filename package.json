@@ -18,7 +18,9 @@
     "babel-preset-react": "6.24.1",
     "css-loader": "0.28.4",
     "live-server": "^1.2.0",
+    "node-sass": "^4.8.3",
     "normalize.css": "7.0.0",
+    "npm": "^5.8.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-modal": "2.2.2",
@@ -33,5 +35,14 @@
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desaijay315/react-redux.git"
+  },
+  "bugs": {
+    "url": "https://github.com/desaijay315/react-redux/issues"
+  },
+  "homepage": "https://github.com/desaijay315/react-redux#readme",
+  "description": ""
 }
