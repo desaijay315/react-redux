@@ -18,12 +18,16 @@
     "babel-preset-react": "6.24.1",
     "css-loader": "0.28.4",
     "live-server": "^1.2.0",
+    "moment": "^2.22.1",
     "node-sass": "^4.8.3",
     "normalize.css": "7.0.0",
     "npm": "^5.8.0",
     "react": "15.6.1",
+    "react-addons-shallow-compare": "^15.6.0",
+    "react-dates": "^12.3.0",
     "react-dom": "15.6.1",
     "react-modal": "2.2.2",
+    "react-redux": "^5.0.5",
     "react-router-dom": "4.1.2",
     "redux": "3.7.2",
     "sass-loader": "6.0.6",
@@ -31,7 +35,8 @@
     "uuid": "^3.2.1",
     "validator": "8.0.0",
     "webpack": "3.1.0",
-    "webpack-dev-server": "2.5.1"
+    "webpack-dev-server": "2.5.1",
+    "webpack-hot-middleware": "^2.7.1"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0"

@@ -1,4 +1,5 @@
-const path = require('path');
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './src/app.js',
@@ -6,6 +7,10 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js'
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ],
   module: {
     rules: [{
       loader: 'babel-loader',
